@@ -1,0 +1,101 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.BasicTheme": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "LibraryMS.Application": {
+      "path": "src/LibraryMS.Application/LibraryMS.Application.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.Application.Tests": {
+      "path": "test/LibraryMS.Application.Tests/LibraryMS.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.Domain.Shared": {
+      "path": "src/LibraryMS.Domain.Shared/LibraryMS.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.Application.Contracts": {
+      "path": "src/LibraryMS.Application.Contracts/LibraryMS.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.HttpApi": {
+      "path": "src/LibraryMS.HttpApi/LibraryMS.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.HttpApi.Client": {
+      "path": "src/LibraryMS.HttpApi.Client/LibraryMS.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.Web": {
+      "path": "src/LibraryMS.Web/LibraryMS.Web.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.Web.Tests": {
+      "path": "test/LibraryMS.Web.Tests/LibraryMS.Web.Tests.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.EntityFrameworkCore.Tests": {
+      "path": "test/LibraryMS.EntityFrameworkCore.Tests/LibraryMS.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.EntityFrameworkCore": {
+      "path": "src/LibraryMS.EntityFrameworkCore/LibraryMS.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.TestBase": {
+      "path": "test/LibraryMS.TestBase/LibraryMS.TestBase.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.Domain.Tests": {
+      "path": "test/LibraryMS.Domain.Tests/LibraryMS.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/LibraryMS.HttpApi.Client.ConsoleTestApp/LibraryMS.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "LibraryMS.DbMigrator": {
+      "path": "src/LibraryMS.DbMigrator/LibraryMS.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "LibraryMS.Domain": {
+      "path": "src/LibraryMS.Domain/LibraryMS.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

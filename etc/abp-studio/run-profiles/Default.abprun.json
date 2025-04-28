@@ -1,0 +1,15 @@
+﻿{
+  "applications": {
+    "LibraryMS.Web": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44371",
+      "path": "../../../src/LibraryMS.Web/LibraryMS.Web.csproj",
+      "kubernetesService": ".*-web$",
+      "healthCheckEndpoint": "/health-status",
+      "healthUiEndpoint": "/health-ui",
+      "execution": {
+        "order": 2
+      }
+    }
+  }
+}
