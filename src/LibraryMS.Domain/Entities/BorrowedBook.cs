@@ -3,10 +3,11 @@ using LibraryMS.Books;
 using LibraryMS.Borrowers;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace LibraryMS.BorrowedBooks
 {
-    public class BorrowedBook : Entity<int>
+    public class BorrowedBook : FullAuditedEntity<int>
     {
         public int BookId { get; set; }
         public Book Book { get; set; }

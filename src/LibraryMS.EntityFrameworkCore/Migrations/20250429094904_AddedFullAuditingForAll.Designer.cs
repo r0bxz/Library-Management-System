@@ -4,6 +4,7 @@ using LibraryMS.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace LibraryMS.Migrations
 {
     [DbContext(typeof(LibraryMSDbContext))]
-    partial class LibraryMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250429094904_AddedFullAuditingForAll")]
+    partial class AddedFullAuditingForAll
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

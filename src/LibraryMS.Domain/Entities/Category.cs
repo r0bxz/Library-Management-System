@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using LibraryMS.Books;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace LibraryMS.Categories
 {
-    public class Category : Entity<int>
+    public class Category : FullAuditedEntity<int>
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -16,7 +17,7 @@ namespace LibraryMS.Categories
         public Category(string name, string description)
         {
             Name = Check.NotNullOrWhiteSpace(name, nameof(name));
-            Description = Check.NotNullOrWhiteSpace(description, nameof(description));
+            Description = description;
             Books = new List<Book>();
         }
 
@@ -28,7 +29,7 @@ namespace LibraryMS.Categories
 
         public Category ChangeDescription(string description)
         {
-            Description = Check.NotNullOrWhiteSpace(description, nameof(description));
+            Description = description;
             return this;
         }
     }

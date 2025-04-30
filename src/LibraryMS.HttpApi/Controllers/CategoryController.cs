@@ -34,10 +34,10 @@ namespace LibraryMS.Controllers
             return await _categoryAppService.CreateAsync(input);
         }
 
-        [HttpPut("{id}")]
-        public async Task<CategoryDto> UpdateAsync(int id, [FromBody] UpdateCategoryDto input)
+        [HttpPut]
+        public async Task<CategoryDto> UpdateAsync([FromBody] UpdateCategoryDto input)
         {
-            return await _categoryAppService.UpdateAsync(id, input);
+            return await _categoryAppService.UpdateAsync(input);
         }
 
         [HttpDelete("{id}")]

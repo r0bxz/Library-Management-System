@@ -38,9 +38,10 @@ namespace LibraryMS.Borrowers
             return ObjectMapper.Map<Borrower, BorrowerDto>(borrower);
         }
 
-        public async Task<BorrowerDto> UpdateAsync(int id, UpdateBorrowerDto input)
+        public async Task<BorrowerDto> UpdateAsync( UpdateBorrowerDto input)
         {
-            var borrower = await _borrowerManager.UpdateAsync(id, input.FullName, input.Email, input.PhoneNumber);
+            var borrower =await _borrowerManager.UpdateAsync(input.Id, input.FullName, input.Email, input.PhoneNumber);
+
             return ObjectMapper.Map<Borrower, BorrowerDto>(borrower);
         }
 

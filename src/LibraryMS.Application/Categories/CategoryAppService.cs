@@ -4,6 +4,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using LibraryMS.Managers;
 using Volo.Abp;
+using LibraryMS.Borrowers;
 
 namespace LibraryMS.Categories
 {
@@ -38,9 +39,11 @@ namespace LibraryMS.Categories
             return ObjectMapper.Map<Category, CategoryDto>(category);
         }
 
-        public async Task<CategoryDto> UpdateAsync(int id, UpdateCategoryDto input)
+        public async Task<CategoryDto> UpdateAsync(UpdateCategoryDto input)
         {
-            var category = await _categoryManager.UpdateAsync(id, input.Name, input.Description);
+           
+            var category = await _categoryManager.UpdateAsync(input.Id, input.Name, input.Description);
+
             return ObjectMapper.Map<Category, CategoryDto>(category);
         }
 

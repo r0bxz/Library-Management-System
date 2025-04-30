@@ -9,10 +9,11 @@ public class LibraryMSPermissionDefinitionProvider : PermissionDefinitionProvide
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(LibraryMSPermissions.GroupName);
+        var myGroup = context.AddGroup(LibraryMSPermissions.GroupName); 
 
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(LibraryMSPermissions.MyPermission1, L("Permission:MyPermission1"));
+        var booksPermission = myGroup.AddPermission(LibraryMSPermissions.Books.Default, L("Permission:Books"));
+        booksPermission.AddChild(LibraryMSPermissions.Books.Create, L("Permission:Books.Create"));
+        booksPermission.AddChild(LibraryMSPermissions.Books.Delete, L("Permission:Books.Delete"));
     }
 
     private static LocalizableString L(string name)

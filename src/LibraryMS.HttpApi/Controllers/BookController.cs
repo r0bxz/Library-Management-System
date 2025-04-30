@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using LibraryMS.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.Application.Dtos;
 
@@ -33,10 +35,10 @@ namespace LibraryMS.Controllers
             return await _bookAppService.CreateAsync(input);
         }
 
-        [HttpPut("{id}")]
-        public async Task<BookDto> UpdateAsync(int id, [FromBody] UpdateBookDto input)
+        [HttpPut]
+        public async Task<BookDto> UpdateAsync( [FromBody] UpdateBookDto input)
         {
-            return await _bookAppService.UpdateAsync(id, input);
+            return await _bookAppService.UpdateAsync(input);
         }
 
         [HttpDelete("{id}")]

@@ -22,7 +22,6 @@ namespace LibraryMS.Application
             _borrowedBookManager = borrowedBookManager;
         }
 
-      
         public async Task<BorrowedBookDto> CreateAsync(CreateBorrowedBookDto input)
         {
 
@@ -32,23 +31,17 @@ namespace LibraryMS.Application
         }
 
 
-        public async Task<BorrowedBookDto> ReturnAsync(int id, ReturnBorrowedBookDto input)
+        public async Task<BorrowedBookDto> ReturnAsync(ReturnBorrowedBookDto input)
         {
-          
-            var returnDate = input.ReturnDate;
+       
+            var borrowedBook = await _borrowedBookManager.ReturnAsync(input.Id, input.ReturnDate);
 
-            
-            var borrowedBook = await _borrowedBookManager.ReturnAsync(id, returnDate);
-
-            
             return ObjectMapper.Map<BorrowedBook, BorrowedBookDto>(borrowedBook);
         }
 
-
-
         public async Task<PagedResultDto<BorrowedBookDto>> GetAllAsync(PagedAndSortedResultRequestDto input)
         {
-            var items = await _borrowedBookManager.GetAllAsync();
+            var items = await _borrowedBookManager.GetAllAsync(b=>!b.IsReturned);
 
             return new PagedResultDto<BorrowedBookDto>(
                 items.Count,
@@ -56,15 +49,12 @@ namespace LibraryMS.Application
             );
         }
 
-
-
         public async Task<List<BorrowedBookDto>> GetReturnedAsync()
         {
-            var borrowedBooks = await _borrowedBookManager.GetReturnedAsync();
+            var borrowedBooks = await _borrowedBookManager.GetAllAsync(b=>b.IsReturned);
             return ObjectMapper.Map<List<BorrowedBook>, List<BorrowedBookDto>>(borrowedBooks);
         }
 
-        
         public async Task<List<BorrowedBookDto>> GetOverdueAsync(DateTime currentDate)
         {
             var borrowedBooks = await _borrowedBookManager.GetOverdueAsync(currentDate);

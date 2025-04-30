@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 public interface IBorrowedBookAppService
 {
     Task<BorrowedBookDto> CreateAsync(CreateBorrowedBookDto input);
-
     Task<PagedResultDto<BorrowedBookDto>> GetAllAsync(PagedAndSortedResultRequestDto input);
-
-    Task<BorrowedBookDto> ReturnAsync(int id, ReturnBorrowedBookDto input);
-
+    Task<BorrowedBookDto> ReturnAsync(ReturnBorrowedBookDto input);
     Task<List<BorrowedBookDto>> GetReturnedAsync();
     Task<List<BorrowedBookDto>> GetOverdueAsync(DateTime currentDate);
   

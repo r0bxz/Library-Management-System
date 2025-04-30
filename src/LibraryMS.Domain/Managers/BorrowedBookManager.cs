@@ -7,13 +7,13 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
+using System.Linq.Expressions;
 
 namespace LibraryMS.Managers
 {
     public class BorrowedBookManager : DomainService
     {
         private readonly IRepository<BorrowedBook, int> _borrowedBookRepository;
-
         public BorrowedBookManager(IRepository<BorrowedBook, int> borrowedBookRepository)
         {
             _borrowedBookRepository = borrowedBookRepository;
@@ -45,18 +45,18 @@ namespace LibraryMS.Managers
             return await _borrowedBookRepository.UpdateAsync(borrowedBook);
         }
 
-        public async Task<List<BorrowedBook>> GetAllAsync()
+        public async Task<List<BorrowedBook>> GetAllAsync(Expression<Func<BorrowedBook, bool>> predicate)
         {
            
             return await _borrowedBookRepository
-                .GetListAsync(b => !b.IsReturned);
+                .GetListAsync(predicate);
         }
 
-        public async Task<List<BorrowedBook>> GetReturnedAsync()
+        public async Task<List<BorrowedBook>> GetReturnedAsync(Expression<Func<BorrowedBook, bool>> predicate)
         {
           
             return await _borrowedBookRepository
-                .GetListAsync(b => b.IsReturned);
+                .GetListAsync(predicate);
         }
 
         public async Task<List<BorrowedBook>> GetOverdueAsync(DateTime currentDate)

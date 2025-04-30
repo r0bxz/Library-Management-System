@@ -84,21 +84,12 @@ public class LibraryMSDbContext :
         {
             b.ToTable("Books");
             b.HasKey(e => e.Id);
-
             b.Property(e => e.Id).ValueGeneratedOnAdd();
             b.Property(x => x.Title).IsRequired().HasMaxLength(255);
             b.Property(x => x.Author).IsRequired().HasMaxLength(255);
-
-            
-            b.Property(x => x.PublishedDate)
-             .HasConversion(
-                v => v.ToDateTime(TimeOnly.MinValue),  
-                v => DateOnly.FromDateTime(v)           
-             );
-
+            b.Property(x => x.PublishedDate);
             b.Property(x => x.ISBN).HasMaxLength(20);
             b.Property(x => x.CoverImagePath).HasMaxLength(500);
-
             b.HasOne(x => x.Category)
              .WithMany(x => x.Books)
              .HasForeignKey(x => x.CategoryId);
@@ -114,7 +105,7 @@ public class LibraryMSDbContext :
             b.HasOne(x => x.Borrower).WithMany(x => x.BorrowedBooks).HasForeignKey(x => x.BorrowerId);
             b.Property(x => x.BorrowDate);
             b.Property(x => x.ReturnDate);
-            b.Property(x => x.IsReturned).IsRequired();
+            b.Property(x => x.IsReturned);
         });
 
         builder.Entity<Borrower>(b =>
@@ -122,9 +113,8 @@ public class LibraryMSDbContext :
             b.ToTable("Borrowers");
             b.HasKey(e => e.Id);
             b.Property(e => e.Id).ValueGeneratedOnAdd();
-            
             b.Property(x => x.FullName).IsRequired().HasMaxLength(255);
-            b.Property(x => x.Email).HasMaxLength(255);
+            b.Property(x => x.Email).IsRequired().HasMaxLength(255);
             b.Property(x => x.PhoneNumber).HasMaxLength(15);
         });
 
@@ -134,10 +124,11 @@ public class LibraryMSDbContext :
             b.ToTable("Categories");
             b.HasKey(e => e.Id);
             b.Property(e => e.Id).ValueGeneratedOnAdd();
-            
             b.Property(x => x.Name).IsRequired().HasMaxLength(255);
             b.Property(x => x.Description).HasMaxLength(1000);
         });
+
+      
 
         //builder.Entity<YourEntity>(b =>
         //{

@@ -1,7 +1,5 @@
 using Volo.Abp.Application.Dtos;
-
-
-public class BorrowerDto: EntityDto<int>
+public class BorrowerDto: FullAuditedEntityDto<int>
 {
     public string FullName { get; set; }
     public string Email { get; set; }

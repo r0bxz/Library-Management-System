@@ -33,10 +33,10 @@ namespace LibraryMS.Controllers
             return await _borrowerAppService.CreateAsync(input);
         }
 
-        [HttpPut("{id}")]
-        public async Task<BorrowerDto> UpdateAsync(int id, [FromBody] UpdateBorrowerDto input)
+        [HttpPut]
+        public async Task<BorrowerDto> UpdateAsync( [FromBody] UpdateBorrowerDto input)
         {
-            return await _borrowerAppService.UpdateAsync(id, input);
+            return await _borrowerAppService.UpdateAsync(input);
         }
 
         [HttpDelete("{id}")]

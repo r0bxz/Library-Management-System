@@ -9,6 +9,7 @@ using Volo.Abp;
 using Volo.Abp.ObjectMapping;
 using Volo.Abp.Domain.Repositories;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryMS.Books
 {
@@ -30,12 +31,9 @@ namespace LibraryMS.Books
             return ObjectMapper.Map<Book, BookDto>(book);
         }
 
-       
         public async Task<BookDto> CreateAsync(CreateBookDto input)
         {
-           
-
-            
+          
             var book = await _bookManager.CreateAsync(
                 input.Title,
                 input.Author,
@@ -48,33 +46,21 @@ namespace LibraryMS.Books
             return ObjectMapper.Map<Book, BookDto>(book);
         }
 
-       
-        public async Task<BookDto> UpdateAsync(int id, UpdateBookDto input)
+        public async Task<BookDto> UpdateAsync(UpdateBookDto input)
         {
-             
 
-            
-            var book = await _bookManager.UpdateAsync(
-                id,
-                input.Title,
-                input.Author,
-                input.PublishedDate,
-                input.ISBN,
-                input.CoverImagePath,
-                input.CategoryId
-            );
+
+            var book = await _bookManager.UpdateAsync(input.Id, input.Title, input.Author, input.PublishedDate, input.ISBN, input.CoverImagePath, input.CategoryId);
 
             return ObjectMapper.Map<Book, BookDto>(book);
         }
 
-        
         public async Task DeleteAsync(int id)
         {
             
             var book = await _bookManager.GetAsync(id);
             await _bookManager.DeleteAsync(id);
         }
-
 
         public async Task<PagedResultDto<BookDto>> GetAllAsync(PagedAndSortedResultRequestDto input, string category = null, string searchQuery = null)
         {

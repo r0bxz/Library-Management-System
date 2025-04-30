@@ -4,14 +4,11 @@ using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
 using System.Collections.Generic;
 
-
 namespace LibraryMS.Managers
 {
     public class CategoryManager:DomainService
     {
         private readonly IRepository<Category, int> _categoryRepository;
-
-
         public CategoryManager(IRepository<Category, int> categoryRepository)
         {
             _categoryRepository = categoryRepository;
@@ -19,11 +16,8 @@ namespace LibraryMS.Managers
 
         public async Task<Category> CreateAsync(string name, string description)
         {
-            var category = new Category
-            {
-                Name = name,
-                Description = description
-            };
+            var category = new Category(name, description);
+           
 
             return await _categoryRepository.InsertAsync(category);
         }
@@ -31,8 +25,9 @@ namespace LibraryMS.Managers
         public async Task<Category> UpdateAsync(int id, string name, string description)
         {
             var category = await _categoryRepository.GetAsync(id);
-            category.Name = name;
-            category.Description = description;
+
+            category.ChangeName(name);  
+            category.ChangeDescription(description);
 
             return await _categoryRepository.UpdateAsync(category);
         }

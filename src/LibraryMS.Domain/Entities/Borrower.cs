@@ -1,14 +1,20 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using LibraryMS.BorrowedBooks;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace LibraryMS.Borrowers
 {
-    public class Borrower : Entity<int>
+    public class Borrower : FullAuditedEntity<int>
     {
         public string FullName { get; set; }
+
+        [EmailAddress]
         public string Email { get; set; }
+
+        [Phone]
         public string PhoneNumber { get; set; }
         public ICollection<BorrowedBook> BorrowedBooks { get; set; }
 
@@ -18,7 +24,7 @@ namespace LibraryMS.Borrowers
         {
             FullName = Check.NotNullOrWhiteSpace(fullName, nameof(fullName));
             Email = Check.NotNullOrWhiteSpace(email, nameof(email));
-            PhoneNumber = Check.NotNullOrWhiteSpace(phoneNumber, nameof(phoneNumber));
+            PhoneNumber = phoneNumber;
             BorrowedBooks = new List<BorrowedBook>();
         }
 
@@ -36,7 +42,7 @@ namespace LibraryMS.Borrowers
 
         public Borrower ChangePhoneNumber(string phoneNumber)
         {
-            PhoneNumber = Check.NotNullOrWhiteSpace(phoneNumber, nameof(phoneNumber));
+            PhoneNumber = phoneNumber;
             return this;
         }
     }
