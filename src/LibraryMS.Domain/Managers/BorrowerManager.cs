@@ -1,5 +1,7 @@
 using LibraryMS.Borrowers;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
@@ -18,7 +20,7 @@ namespace LibraryMS.Managers
         public async Task<Borrower> CreateAsync(string fullName, string email, string phoneNumber)
         {
             var borrower = new Borrower(fullName, email, phoneNumber);
-            
+
             return await _borrowerRepository.InsertAsync(borrower);
         }
 
@@ -46,9 +48,11 @@ namespace LibraryMS.Managers
 
         public async Task<List<Borrower>> GetAllAsync()
         {
-            return await _borrowerRepository.GetListAsync();
+            var query = await _borrowerRepository.GetQueryableAsync();
+            return await query.ToListAsync();
+
         }
 
-       
+
     }
 }

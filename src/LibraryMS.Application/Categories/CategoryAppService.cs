@@ -5,6 +5,7 @@ using Volo.Abp.Application.Services;
 using LibraryMS.Managers;
 using Volo.Abp;
 using LibraryMS.Borrowers;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryMS.Categories
 {
@@ -26,13 +27,12 @@ namespace LibraryMS.Categories
 
         public async Task<PagedResultDto<CategoryDto>> GetAllAsync(PagedAndSortedResultRequestDto input)
         {
-            var items = await _categoryManager.GetAllAsync();
+            var categoriesList = await _categoryManager.GetAllAsync();          
             return new PagedResultDto<CategoryDto>(
-                items.Count,
-                ObjectMapper.Map<List<Category>, List<CategoryDto>>(items)
+                categoriesList.Count,
+                ObjectMapper.Map<List<Category>, List<CategoryDto>>(categoriesList)
             );
         }
-
         public async Task<CategoryDto> CreateAsync(CreateCategoryDto input)
         {
             var category = await _categoryManager.CreateAsync(input.Name, input.Description);

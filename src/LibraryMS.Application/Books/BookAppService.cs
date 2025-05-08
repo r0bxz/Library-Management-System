@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryMS.Books
 {
-    [RemoteService(false)] 
+    [RemoteService(false)]
     public class BookAppService : LibraryMSAppService, IBookAppService
     {
         private readonly BookManager _bookManager;
@@ -22,18 +22,16 @@ namespace LibraryMS.Books
         {
             _bookManager = bookManager;
         }
-
-        
         public async Task<BookDto> GetAsync(int id)
         {
-           
+
             var book = await _bookManager.GetAsync(id);
             return ObjectMapper.Map<Book, BookDto>(book);
         }
 
         public async Task<BookDto> CreateAsync(CreateBookDto input)
         {
-          
+
             var book = await _bookManager.CreateAsync(
                 input.Title,
                 input.Author,
@@ -45,7 +43,6 @@ namespace LibraryMS.Books
 
             return ObjectMapper.Map<Book, BookDto>(book);
         }
-
         public async Task<BookDto> UpdateAsync(UpdateBookDto input)
         {
 
@@ -54,14 +51,12 @@ namespace LibraryMS.Books
 
             return ObjectMapper.Map<Book, BookDto>(book);
         }
-
         public async Task DeleteAsync(int id)
         {
-            
+
             var book = await _bookManager.GetAsync(id);
             await _bookManager.DeleteAsync(id);
         }
-
         public async Task<PagedResultDto<BookDto>> GetAllAsync(PagedAndSortedResultRequestDto input, string category = null, string searchQuery = null)
         {
             var books = await _bookManager.GetAllAsync(category, searchQuery);

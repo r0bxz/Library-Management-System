@@ -17,7 +17,6 @@ using LibraryMS.BorrowedBooks;
 using LibraryMS.Books;
 using System;
 
-
 namespace LibraryMS.EntityFrameworkCore;
 
 [ReplaceDbContext(typeof(IIdentityDbContext))]
@@ -67,9 +66,6 @@ public class LibraryMSDbContext :
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        /* Include modules to your migration db context */
-
         builder.ConfigurePermissionManagement();
         builder.ConfigureSettingManagement();
         builder.ConfigureBackgroundJobs();
@@ -79,7 +75,6 @@ public class LibraryMSDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureBlobStoring();
 
-        /* Configure your own tables/entities inside here */
         builder.Entity<Book>(b =>
         {
             b.ToTable("Books");
@@ -94,7 +89,6 @@ public class LibraryMSDbContext :
              .WithMany(x => x.Books)
              .HasForeignKey(x => x.CategoryId);
         });
-
 
         builder.Entity<BorrowedBook>(b =>
         {
@@ -128,13 +122,5 @@ public class LibraryMSDbContext :
             b.Property(x => x.Description).HasMaxLength(1000);
         });
 
-      
-
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(LibraryMSConsts.DbTablePrefix + "YourEntities", LibraryMSConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
     }
 }

@@ -2,7 +2,6 @@ using Volo.Abp.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
 public interface IBorrowedBookAppService
 {
     Task<BorrowedBookDto> CreateAsync(CreateBorrowedBookDto input);

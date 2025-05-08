@@ -7,6 +7,8 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using System.Linq;
 using Volo.Abp;
+using LibraryMS.BorrowedBooks;
+using System.Linq.Expressions;
 public class BookManager : DomainService
 {
     private readonly IRepository<Book, int> _bookRepository;
@@ -35,7 +37,6 @@ public class BookManager : DomainService
 
         return await _bookRepository.UpdateAsync(book);
     }
-
     public async Task DeleteAsync(int id)
     {
         await _bookRepository.DeleteAsync(id);
@@ -45,7 +46,6 @@ public class BookManager : DomainService
     {
         return await _bookRepository.GetAsync(id);
     }
-
     public async Task<List<Book>> GetAllAsync(string category = null, string searchQuery = null)
     {
         var query = await _bookRepository.GetQueryableAsync();
@@ -62,7 +62,6 @@ public class BookManager : DomainService
                 x.Author.Contains(searchQuery)
             );
         }
-
         return await query.ToListAsync();
     }
 }

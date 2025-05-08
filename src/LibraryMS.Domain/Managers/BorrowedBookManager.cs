@@ -19,12 +19,10 @@ namespace LibraryMS.Managers
             _borrowedBookRepository = borrowedBookRepository;
         }
 
-        public async Task<BorrowedBook> CreateAsync(int bookId, int borrowerId, DateTime borrowDate, DateTime returnDate)
+        public async Task<BorrowedBook> CreateAsync(int bookId, int borrowerId, DateTime borrowDate, DateTime returnDate, Expression<Func<BorrowedBook, bool>> predicate)
         {
-          
             var existingBorrowedBook = await _borrowedBookRepository
-                .FirstOrDefaultAsync(b => b.BookId == bookId && b.BorrowerId == borrowerId && !b.IsReturned);
-
+               .FirstOrDefaultAsync(predicate);
             if (existingBorrowedBook != null)
             {
                 throw new UserFriendlyException(LibraryMSDomainErrorCodes.BookAlreadyBorrowed);
@@ -33,37 +31,28 @@ namespace LibraryMS.Managers
             var borrowedBook = new BorrowedBook(bookId, borrowerId, borrowDate, returnDate);
             return await _borrowedBookRepository.InsertAsync(borrowedBook);
         }
-
         public async Task<BorrowedBook> ReturnAsync(int id, DateTime returnDate)
         {
             var borrowedBook = await _borrowedBookRepository.GetAsync(id);
-
-
             borrowedBook.ReturnBook(returnDate);
-            
-
             return await _borrowedBookRepository.UpdateAsync(borrowedBook);
         }
 
         public async Task<List<BorrowedBook>> GetAllAsync(Expression<Func<BorrowedBook, bool>> predicate)
         {
-           
-            return await _borrowedBookRepository
-                .GetListAsync(predicate);
+            var query = await _borrowedBookRepository.GetQueryableAsync();
+            return await query.Where(predicate).ToListAsync();
         }
-
         public async Task<List<BorrowedBook>> GetReturnedAsync(Expression<Func<BorrowedBook, bool>> predicate)
         {
-          
-            return await _borrowedBookRepository
-                .GetListAsync(predicate);
-        }
 
-        public async Task<List<BorrowedBook>> GetOverdueAsync(DateTime currentDate)
+            var query = await _borrowedBookRepository.GetQueryableAsync();
+            return await query.Where(predicate).ToListAsync();
+        }
+        public async Task<List<BorrowedBook>> GetOverdueAsync(DateTime currentDate, Expression<Func<BorrowedBook, bool>> predicate)
         {
-            
-            return await _borrowedBookRepository
-                .GetListAsync(b => !b.IsReturned && b.ReturnDate < currentDate);
+            var query = await _borrowedBookRepository.GetQueryableAsync();
+            return await query.Where(predicate).ToListAsync();
         }
     }
 }

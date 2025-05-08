@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Volo.Abp.Application.Services;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-
 public interface IBookAppService : IApplicationService
 {
     Task<BookDto> CreateAsync(CreateBookDto input);

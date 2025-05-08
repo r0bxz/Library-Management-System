@@ -17,14 +17,14 @@ namespace LibraryMS.HttpApi.Controllers
             _borrowedBookAppService = borrowedBookAppService;
         }
 
-        [HttpPost]
+        [HttpPost("borrow-a-book")]
         public async Task<ActionResult<BorrowedBookDto>> CreateAsync([FromBody] CreateBorrowedBookDto input)
         {
             var result = await _borrowedBookAppService.CreateAsync(input);
             return Ok(result);
         }
 
-        [HttpPut("{id}/return")]
+        [HttpPut("return-a-book")]
         public async Task<ActionResult<BorrowedBookDto>> ReturnAsync( [FromBody] ReturnBorrowedBookDto input)
         {
             var result = await _borrowedBookAppService.ReturnAsync(input);

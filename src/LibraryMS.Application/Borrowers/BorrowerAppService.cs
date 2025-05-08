@@ -4,6 +4,8 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using LibraryMS.Managers;
 using Volo.Abp;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryMS.Borrowers
 {
@@ -16,35 +18,30 @@ namespace LibraryMS.Borrowers
         {
             _borrowerManager = borrowerManager;
         }
-
         public async Task<BorrowerDto> GetAsync(int id)
         {
             var borrower = await _borrowerManager.GetAsync(id);
             return ObjectMapper.Map<Borrower, BorrowerDto>(borrower);
         }
-
         public async Task<PagedResultDto<BorrowerDto>> GetAllAsync(PagedAndSortedResultRequestDto input)
         {
-            var items = await _borrowerManager.GetAllAsync();
+            var borrowersList = await _borrowerManager.GetAllAsync();
             return new PagedResultDto<BorrowerDto>(
-                items.Count,
-                ObjectMapper.Map<List<Borrower>, List<BorrowerDto>>(items)
-            );
+             borrowersList.Count,
+             ObjectMapper.Map<List<Borrower>, List<BorrowerDto>>(borrowersList)
+         );
         }
-
         public async Task<BorrowerDto> CreateAsync(CreateBorrowerDto input)
         {
             var borrower = await _borrowerManager.CreateAsync(input.FullName, input.Email, input.PhoneNumber);
             return ObjectMapper.Map<Borrower, BorrowerDto>(borrower);
         }
-
-        public async Task<BorrowerDto> UpdateAsync( UpdateBorrowerDto input)
+        public async Task<BorrowerDto> UpdateAsync(UpdateBorrowerDto input)
         {
-            var borrower =await _borrowerManager.UpdateAsync(input.Id, input.FullName, input.Email, input.PhoneNumber);
+            var borrower = await _borrowerManager.UpdateAsync(input.Id, input.FullName, input.Email, input.PhoneNumber);
 
             return ObjectMapper.Map<Borrower, BorrowerDto>(borrower);
         }
-
         public async Task DeleteAsync(int id)
         {
             await _borrowerManager.DeleteAsync(id);

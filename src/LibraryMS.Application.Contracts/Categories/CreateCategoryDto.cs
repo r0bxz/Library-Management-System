@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
 
-
 public class CreateCategoryDto
 {
     [Required]

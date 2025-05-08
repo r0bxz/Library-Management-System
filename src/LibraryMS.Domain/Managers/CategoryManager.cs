@@ -3,6 +3,8 @@ using Volo.Abp.Domain.Repositories;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryMS.Managers
 {
@@ -13,7 +15,6 @@ namespace LibraryMS.Managers
         {
             _categoryRepository = categoryRepository;
         }
-
         public async Task<Category> CreateAsync(string name, string description)
         {
             var category = new Category(name, description);
@@ -21,7 +22,6 @@ namespace LibraryMS.Managers
 
             return await _categoryRepository.InsertAsync(category);
         }
-
         public async Task<Category> UpdateAsync(int id, string name, string description)
         {
             var category = await _categoryRepository.GetAsync(id);
@@ -31,7 +31,6 @@ namespace LibraryMS.Managers
 
             return await _categoryRepository.UpdateAsync(category);
         }
-
         public async Task DeleteAsync(int id)
         {
             var category = await _categoryRepository.GetAsync(id);
@@ -42,10 +41,10 @@ namespace LibraryMS.Managers
         {
             return await _categoryRepository.GetAsync(id);
         }
-
         public async Task<List<Category>> GetAllAsync()
         {
-            return await _categoryRepository.GetListAsync();
+           var query =  await _categoryRepository.GetQueryableAsync();
+            return await query.ToListAsync();
         }
     }
 }
