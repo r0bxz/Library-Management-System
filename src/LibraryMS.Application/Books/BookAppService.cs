@@ -10,6 +10,7 @@ using Volo.Abp.ObjectMapping;
 using Volo.Abp.Domain.Repositories;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq.Expressions;
 
 namespace LibraryMS.Books
 {
@@ -57,9 +58,18 @@ namespace LibraryMS.Books
             var book = await _bookManager.GetAsync(id);
             await _bookManager.DeleteAsync(id);
         }
-        public async Task<PagedResultDto<BookDto>> GetAllAsync(PagedAndSortedResultRequestDto input, string category = null, string searchQuery = null)
+        public async Task<PagedResultDto<BookDto>> GetAllAsync(
+        PagedAndSortedResultRequestDto input,
+        string category = null,
+        string searchQuery = null)
         {
-            var books = await _bookManager.GetAllAsync(category, searchQuery);
+            Expression<Func<Book, bool>> predicate = b =>
+                (string.IsNullOrEmpty(category) || (b.Category != null && b.Category.Name == category)) &&
+                (string.IsNullOrEmpty(searchQuery) ||
+                 b.Title.Contains(searchQuery) ||
+                 b.Author.Contains(searchQuery));
+
+            var books = await _bookManager.GetAllAsync(predicate);
 
             var pagedBooks = books
                 .Skip(input.SkipCount)
@@ -71,6 +81,7 @@ namespace LibraryMS.Books
                 ObjectMapper.Map<List<Book>, List<BookDto>>(pagedBooks)
             );
         }
+
 
 
     }

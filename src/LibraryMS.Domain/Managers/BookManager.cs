@@ -46,23 +46,18 @@ public class BookManager : DomainService
     {
         return await _bookRepository.GetAsync(id);
     }
-    public async Task<List<Book>> GetAllAsync(string category = null, string searchQuery = null)
+    public async Task<List<Book>> GetAllAsync(
+     Expression<Func<Book, bool>> predicate = null)
     {
         var query = await _bookRepository.GetQueryableAsync();
 
-        if (!string.IsNullOrEmpty(category))
+        if (predicate != null)
         {
-            query = query.Where(x => x.Category != null && x.Category.Name == category);
+            query = query.Where(predicate);
         }
 
-        if (!string.IsNullOrEmpty(searchQuery))
-        {
-            query = query.Where(x =>
-                x.Title.Contains(searchQuery) ||
-                x.Author.Contains(searchQuery)
-            );
-        }
         return await query.ToListAsync();
     }
+
 }
 
