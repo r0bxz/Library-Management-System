@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using LibraryMS.Books;
 using LibraryMS.BorrowedBooks;
@@ -11,11 +12,11 @@ public class LibraryMSApplicationAutoMapperProfile : Profile
     public LibraryMSApplicationAutoMapperProfile()
     {
 
-        CreateMap<Book, BookDto>();
+
         CreateMap<CreateBookDto, Book>();
         CreateMap<UpdateBookDto, Book>();
 
-        CreateMap<Category, CategoryDto>();
+
         CreateMap<CreateCategoryDto, Category>();
         CreateMap<UpdateCategoryDto, Category>();
 
@@ -27,6 +28,15 @@ public class LibraryMSApplicationAutoMapperProfile : Profile
         CreateMap<BorrowedBook, BorrowedBookDto>();
         CreateMap<CreateBorrowedBookDto, BorrowedBook>();
         CreateMap<UpdateBorrowedBookDto, BorrowedBook>();
+
+        CreateMap<Book, BookDto>()
+        .ForMember(dest => dest.CategoryIds, opt => opt.MapFrom(
+        src => src.BookCategories.Select(bc => bc.CategoryId)));
+
+        CreateMap<Category, CategoryDto>()
+            .ForMember(dest => dest.BookIds, opt => opt.MapFrom(
+                src => src.BookCategories.Select(bc => bc.BookId)));
+
 
 
 

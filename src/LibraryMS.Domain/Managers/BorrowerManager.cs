@@ -40,7 +40,6 @@ namespace LibraryMS.Managers
             var borrower = await _borrowerRepository.GetAsync(id);
             await _borrowerRepository.DeleteAsync(borrower);
         }
-
         public async Task<Borrower> GetAsync(int id)
         {
             return await _borrowerRepository.GetAsync(id);

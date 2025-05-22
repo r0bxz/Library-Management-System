@@ -11,4 +11,6 @@ public class CreateCategoryDto
 
     [StringLength(255)]
     public string Description { get; set; }
+
+    public List<int> BookIds { get; set; } = new();
 }

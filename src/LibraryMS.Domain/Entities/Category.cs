@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using LibraryMS.Books;
+using LibraryMS.BookCategories;
 using Volo.Abp;
-using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace LibraryMS.Categories
@@ -10,7 +9,9 @@ namespace LibraryMS.Categories
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Book> Books { get; set; }
+
+        public ICollection<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
+
 
         internal Category() { }
 
@@ -18,7 +19,7 @@ namespace LibraryMS.Categories
         {
             Name = Check.NotNullOrWhiteSpace(name, nameof(name));
             Description = description;
-            Books = new List<Book>();
+            BookCategories = new List<BookCategory>();
         }
 
         public Category ChangeName(string name)

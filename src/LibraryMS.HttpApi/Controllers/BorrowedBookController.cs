@@ -25,7 +25,7 @@ namespace LibraryMS.HttpApi.Controllers
         }
 
         [HttpPut("return-a-book")]
-        public async Task<ActionResult<BorrowedBookDto>> ReturnAsync( [FromBody] ReturnBorrowedBookDto input)
+        public async Task<ActionResult<BorrowedBookDto>> ReturnAsync([FromBody] ReturnBorrowedBookDto input)
         {
             var result = await _borrowedBookAppService.ReturnAsync(input);
             return Ok(result);

@@ -24,6 +24,21 @@ namespace LibraryMS.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("LibraryMS.BookCategories.BookCategory", b =>
+                {
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("BookCategories", (string)null);
+                });
+
             modelBuilder.Entity("LibraryMS.Books.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -36,9 +51,6 @@ namespace LibraryMS.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("CoverImagePath")
                         .IsRequired()
@@ -89,8 +101,6 @@ namespace LibraryMS.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Books", (string)null);
                 });
@@ -2005,13 +2015,21 @@ namespace LibraryMS.Migrations
                     b.ToTable("AbpSettingDefinitions", (string)null);
                 });
 
-            modelBuilder.Entity("LibraryMS.Books.Book", b =>
+            modelBuilder.Entity("LibraryMS.BookCategories.BookCategory", b =>
                 {
+                    b.HasOne("LibraryMS.Books.Book", "Book")
+                        .WithMany("BookCategories")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LibraryMS.Categories.Category", "Category")
-                        .WithMany("Books")
+                        .WithMany("BookCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Book");
 
                     b.Navigation("Category");
                 });
@@ -2177,6 +2195,11 @@ namespace LibraryMS.Migrations
                         .HasForeignKey("AuthorizationId");
                 });
 
+            modelBuilder.Entity("LibraryMS.Books.Book", b =>
+                {
+                    b.Navigation("BookCategories");
+                });
+
             modelBuilder.Entity("LibraryMS.Borrowers.Borrower", b =>
                 {
                     b.Navigation("BorrowedBooks");
@@ -2184,7 +2207,7 @@ namespace LibraryMS.Migrations
 
             modelBuilder.Entity("LibraryMS.Categories.Category", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("BookCategories");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

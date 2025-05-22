@@ -34,7 +34,7 @@ namespace LibraryMS.Controllers
         }
 
         [HttpPut]
-        public async Task<BorrowerDto> UpdateAsync( [FromBody] UpdateBorrowerDto input)
+        public async Task<BorrowerDto> UpdateAsync([FromBody] UpdateBorrowerDto input)
         {
             return await _borrowerAppService.UpdateAsync(input);
         }

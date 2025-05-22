@@ -16,6 +16,7 @@ using LibraryMS.Borrowers;
 using LibraryMS.BorrowedBooks;
 using LibraryMS.Books;
 using System;
+using LibraryMS.BookCategories;
 
 namespace LibraryMS.EntityFrameworkCore;
 
@@ -30,6 +31,8 @@ public class LibraryMSDbContext :
     public DbSet<Category> Categories { get; set; }
     public DbSet<Borrower> Borrowers { get; set; }
     public DbSet<BorrowedBook> BorrowedBooks { get; set; }
+
+    public DbSet<BookCategory> BookCategories { get; set; }
 
 
     #region Entities from the modules
@@ -85,9 +88,35 @@ public class LibraryMSDbContext :
             b.Property(x => x.PublishedDate);
             b.Property(x => x.ISBN).HasMaxLength(20);
             b.Property(x => x.CoverImagePath).HasMaxLength(500);
+            b.HasMany(b => b.BookCategories)
+             .WithOne(bc => bc.Book)
+             .HasForeignKey(bc => bc.BookId);
+        });
+
+        builder.Entity<Category>(b =>
+        {
+            b.ToTable("Categories");
+            b.HasKey(e => e.Id);
+            b.Property(e => e.Id).ValueGeneratedOnAdd();
+            b.Property(x => x.Name).IsRequired().HasMaxLength(255);
+            b.Property(x => x.Description).HasMaxLength(1000);
+            b.HasMany(b => b.BookCategories)
+            .WithOne(bc => bc.Category)
+            .HasForeignKey(bc => bc.CategoryId);
+
+        });
+        builder.Entity<BookCategory>(b =>
+        {
+            b.ToTable("BookCategories");
+            b.HasKey(x => new { x.BookId, x.CategoryId });
+
+            b.HasOne(x => x.Book)
+                .WithMany(x => x.BookCategories)
+                .HasForeignKey(x => x.BookId);
+
             b.HasOne(x => x.Category)
-             .WithMany(x => x.Books)
-             .HasForeignKey(x => x.CategoryId);
+                .WithMany(x => x.BookCategories)
+                .HasForeignKey(x => x.CategoryId);
         });
 
         builder.Entity<BorrowedBook>(b =>
@@ -112,15 +141,7 @@ public class LibraryMSDbContext :
             b.Property(x => x.PhoneNumber).HasMaxLength(15);
         });
 
-        builder.Entity<Category>(b =>
-        {
-
-            b.ToTable("Categories");
-            b.HasKey(e => e.Id);
-            b.Property(e => e.Id).ValueGeneratedOnAdd();
-            b.Property(x => x.Name).IsRequired().HasMaxLength(255);
-            b.Property(x => x.Description).HasMaxLength(1000);
-        });
+      
 
     }
 }

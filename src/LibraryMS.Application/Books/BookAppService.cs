@@ -23,51 +23,57 @@ namespace LibraryMS.Books
         {
             _bookManager = bookManager;
         }
+
         public async Task<BookDto> GetAsync(int id)
         {
-
             var book = await _bookManager.GetAsync(id);
             return ObjectMapper.Map<Book, BookDto>(book);
         }
 
         public async Task<BookDto> CreateAsync(CreateBookDto input)
         {
-
             var book = await _bookManager.CreateAsync(
                 input.Title,
                 input.Author,
                 input.PublishedDate,
                 input.ISBN,
                 input.CoverImagePath,
-                input.CategoryId
+                input.CategoryIds
+            );
+            return ObjectMapper.Map<Book, BookDto>(book);
+        }
+
+        public async Task<BookDto> UpdateAsync(UpdateBookDto input)
+        {
+            var book = await _bookManager.UpdateAsync(
+                input.Id,
+                input.Title,
+                input.Author,
+                input.PublishedDate,
+                input.ISBN,
+                input.CoverImagePath,
+                input.CategoryIds
             );
 
             return ObjectMapper.Map<Book, BookDto>(book);
         }
-        public async Task<BookDto> UpdateAsync(UpdateBookDto input)
-        {
 
-
-            var book = await _bookManager.UpdateAsync(input.Id, input.Title, input.Author, input.PublishedDate, input.ISBN, input.CoverImagePath, input.CategoryId);
-
-            return ObjectMapper.Map<Book, BookDto>(book);
-        }
         public async Task DeleteAsync(int id)
         {
-
-            var book = await _bookManager.GetAsync(id);
             await _bookManager.DeleteAsync(id);
         }
+
         public async Task<PagedResultDto<BookDto>> GetAllAsync(
-        PagedAndSortedResultRequestDto input,
-        string category = null,
-        string searchQuery = null)
+      PagedAndSortedResultRequestDto input,
+      string category = null,
+      string searchQuery = null)
         {
             Expression<Func<Book, bool>> predicate = b =>
-                (string.IsNullOrEmpty(category) || (b.Category != null && b.Category.Name == category)) &&
+                (string.IsNullOrEmpty(category) ||
+                    b.BookCategories.Any(bc => bc.Category.Name == category)) &&
                 (string.IsNullOrEmpty(searchQuery) ||
-                 b.Title.Contains(searchQuery) ||
-                 b.Author.Contains(searchQuery));
+                    b.Title.Contains(searchQuery) ||
+                    b.Author.Contains(searchQuery));
 
             var books = await _bookManager.GetAllAsync(predicate);
 
@@ -81,7 +87,6 @@ namespace LibraryMS.Books
                 ObjectMapper.Map<List<Book>, List<BookDto>>(pagedBooks)
             );
         }
-
 
 
     }

@@ -23,10 +23,10 @@ namespace LibraryMS.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedResultDto<BookDto>> GetAllAsync([FromQuery] PagedAndSortedResultRequestDto input,[FromQuery] string category = null,
+        public async Task<PagedResultDto<BookDto>> GetAllAsync([FromQuery] PagedAndSortedResultRequestDto input, [FromQuery] string category = null,
             [FromQuery] string searchQuery = null)
         {
-            return await _bookAppService.GetAllAsync(input,category,searchQuery);
+            return await _bookAppService.GetAllAsync(input, category, searchQuery);
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace LibraryMS.Controllers
         }
 
         [HttpPut]
-        public async Task<BookDto> UpdateAsync( [FromBody] UpdateBookDto input)
+        public async Task<BookDto> UpdateAsync([FromBody] UpdateBookDto input)
         {
             return await _bookAppService.UpdateAsync(input);
         }

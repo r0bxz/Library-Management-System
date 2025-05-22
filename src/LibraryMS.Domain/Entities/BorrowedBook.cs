@@ -16,18 +16,15 @@ namespace LibraryMS.BorrowedBooks
         public DateTime BorrowDate { get; set; }
         public DateTime? ReturnDate { get; set; }
         public bool IsReturned { get; set; }
-
         internal BorrowedBook() { }
-
         public BorrowedBook(int bookId, int borrowerId, DateTime borrowDate, DateTime returnDate)
         {
             BookId = bookId;
+            IsReturned = false;
             BorrowerId = borrowerId;
             BorrowDate = borrowDate;
             ReturnDate = returnDate;
-            IsReturned = false;
         }
-
         public BorrowedBook ReturnBook(DateTime returnDate)
         {
             ReturnDate = returnDate;

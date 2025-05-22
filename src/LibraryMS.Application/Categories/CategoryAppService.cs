@@ -27,7 +27,7 @@ namespace LibraryMS.Categories
 
         public async Task<PagedResultDto<CategoryDto>> GetAllAsync(PagedAndSortedResultRequestDto input)
         {
-            var categoriesList = await _categoryManager.GetAllAsync();          
+            var categoriesList = await _categoryManager.GetAllAsync();
             return new PagedResultDto<CategoryDto>(
                 categoriesList.Count,
                 ObjectMapper.Map<List<Category>, List<CategoryDto>>(categoriesList)
@@ -41,7 +41,7 @@ namespace LibraryMS.Categories
 
         public async Task<CategoryDto> UpdateAsync(UpdateCategoryDto input)
         {
-           
+
             var category = await _categoryManager.UpdateAsync(input.Id, input.Name, input.Description);
 
             return ObjectMapper.Map<Category, CategoryDto>(category);

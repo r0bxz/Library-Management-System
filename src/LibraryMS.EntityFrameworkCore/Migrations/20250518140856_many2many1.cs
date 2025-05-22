@@ -5,7 +5,7 @@
 namespace LibraryMS.Migrations
 {
     /// <inheritdoc />
-    public partial class update_2 : Migration
+    public partial class many2many1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

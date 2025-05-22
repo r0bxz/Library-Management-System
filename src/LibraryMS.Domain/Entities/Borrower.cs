@@ -27,19 +27,16 @@ namespace LibraryMS.Borrowers
             PhoneNumber = phoneNumber;
             BorrowedBooks = new List<BorrowedBook>();
         }
-
         public Borrower ChangeFullName(string fullName)
         {
             FullName = Check.NotNullOrWhiteSpace(fullName, nameof(fullName));
             return this;
         }
-
         public Borrower ChangeEmail(string email)
         {
             Email = Check.NotNullOrWhiteSpace(email, nameof(email));
             return this;
         }
-
         public Borrower ChangePhoneNumber(string phoneNumber)
         {
             PhoneNumber = phoneNumber;
